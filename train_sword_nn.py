@@ -75,12 +75,12 @@ blade_branch = PReLU()(blade_branch)
 blade_branch = Conv2D(filters=64, kernel_size=(2,2), padding='same')(input_blade)
 blade_branch = PReLU()(blade_branch)
 
-merg_blade - multiply([grip_branch, magic_branch])
-merg_blade = Conv2D(filters=64, kernel_size=(2,2), padding='same')(merg_blade)
-merg_blade = PReLU()(merg_blade)
+merge_blade - multiply([grip_branch, magic_branch])
+merge_blade = Conv2D(filters=64, kernel_size=(2,2), padding='same')(merge_blade)
+merge_blade = PReLU()(merge_blade)
 
-merge_branch = multiply([magic_branch, grip_branch, blade_branch])
-merge_branch = Conv2D(filters=4, kernel_size=(1,1), padding='same')(merge_branch)
+merge_branch = multiply([merge_blade, merge_grip])
+merge_branch = Conv2D(filters=4, kernel_size=(2,2), padding='same')(merge_branch)
 
 final_model = Model(inputs = [input_magic,input_grip,input_blade], outputs = merge_branch)
 
