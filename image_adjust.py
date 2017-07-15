@@ -13,10 +13,30 @@ parts = ['train', 'blade', 'grip', 'magic']
 blade_flip = False
 
 def return_sword_img_names(sword_num, part, hue_shift=False):
+<<<<<<< HEAD
     if hue_shift:
         return 'sword_%s_%s_%s.png' %(sword_num, part, hue_shift)
     else:
         return 'sword_%s_%s.png' %(sword_num, part)
+=======
+
+    if sword_num < 10:
+        num_text = '0%s' %sword_num
+    else:
+        num_text = '%s' %sword_num  
+
+    if hue_shift:
+        if hue_shift < 10:
+            shift_text = '00%s' %hue_shift
+        elif hue_shift < 100:
+            shift_text = '0%s' %hue_shift  
+        else:
+            shift_text = '%s' %hue_shift
+
+        return 'sword_%s_%s_%s.png' %(num_text, part, shift_text)
+    else:
+        return 'sword_%s_%s.png' %(num_text, part)
+>>>>>>> 316289f4d5b7967362046b42c7befe08822929df
 
 def hue_shift(img, amount):
     hsv_img = img.convert('HSV')
