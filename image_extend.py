@@ -310,6 +310,7 @@ def array_to_img(x, data_format=None, scale=True):
 
 
 def img_to_array(img, data_format=None):
+
   """Converts a PIL Image instance to a Numpy array.
 
   Arguments:
@@ -322,7 +323,7 @@ def img_to_array(img, data_format=None):
   Raises:
       ValueError: if invalid `img` or `data_format` is passed.
   """
-  if data_format is None:
+  if data_format is None: 
     data_format = K.image_data_format()
   if data_format not in {'channels_first', 'channels_last'}:
     raise ValueError('Unknown data_format: ', data_format)
@@ -340,6 +341,7 @@ def img_to_array(img, data_format=None):
       x = x.reshape((x.shape[0], x.shape[1], 1))
   else:
     raise ValueError('Unsupported image shape: ', x.shape)
+
   return x
 
 
@@ -1161,8 +1163,6 @@ class DirectoryIterator_imageY(Iterator):
 
     self.directory = directory
 
-    print(self.directory)
-
     if isinstance(sub_directory_list, list):
       self.sub_directory_list = sub_directory_list
     else:
@@ -1212,10 +1212,10 @@ class DirectoryIterator_imageY(Iterator):
 
     self.filenames = []
     self.samples = 0
+    input_path = os.path.join(os.getcwd(), directory)
 
     for sub_dir_name in sub_directory_list:
-      print(sub_dir_name)
-      absolute_path = os.path.join(os.getcwd(), directory, sub_dir_name)
+      absolute_path = input_path + '/' + sub_dir_name
       sub_dir_files, dir_samples = self._get_sub_dir_list(absolute_path)
       self.filenames.append(sub_dir_files)
       if self.samples == dir_samples or self.samples == 0:
@@ -1288,7 +1288,7 @@ class DirectoryIterator_imageY(Iterator):
             xname,
             grayscale=grayscale,
             target_size=self.target_size)
-        #x = imread(xname, mode=self.sci_input_type)
+        x = img_to_array(x, data_format=self.data_format)
         x = self.image_data_generator.random_transform(x)
         x = self.image_data_generator.standardize(x)
 
@@ -1299,7 +1299,7 @@ class DirectoryIterator_imageY(Iterator):
         yname,
         grayscale=grayscale,
         target_size=self.target_size)
-      #y = imread(yname, mode=self.sci_input_type)
+      y = img_to_array(y, data_format=self.data_format)
       y = self.image_data_generator.random_transform(y)
       y = self.image_data_generator.standardize(y)
       y_batch[i] = y
